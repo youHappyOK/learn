@@ -120,3 +120,30 @@ person2('Jack', 24, city='Beijing', addr='Chaoyang', zipcode=123456)
 def person3(name, age, *, city, job):
     print(name, age, city, job)
 person3('Jack', 24, city='Beijing', job='Engineer')
+
+def mul(*nums):
+    if len(nums) == 0:
+        raise TypeError
+    ret = 1
+    for num in nums:
+        ret = ret * num
+    return ret
+
+print('mul(5) =', mul(5))
+print('mul(5, 6) =', mul(5, 6))
+print('mul(5, 6, 7) =', mul(5, 6, 7))
+print('mul(5, 6, 7, 9) =', mul(5, 6, 7, 9))
+if mul(5) != 5:
+    print('测试失败!')
+elif mul(5, 6) != 30:
+    print('测试失败!')
+elif mul(5, 6, 7) != 210:
+    print('测试失败!')
+elif mul(5, 6, 7, 9) != 1890:
+    print('测试失败!')
+else:
+    try:
+        mul()
+        print('测试失败!')
+    except TypeError:
+        print('测试成功!')
