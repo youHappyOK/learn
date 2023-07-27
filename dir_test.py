@@ -3,8 +3,8 @@ import os
 # 操作系统类型
 print(os.name)
 
-# 详细的系统信息
-print(os.uname())
+# 详细的系统信息 windows没有
+# print(os.uname())
 
 # 环境变量
 print(os.environ)
@@ -43,16 +43,19 @@ print([x for x in os.listdir('.') if os.path.isfile(x) and os.path.splitext(x)[1
 # ls -l
 print([x for x in os.listdir('.')])
 
-def findFile(fileName):
+def findFile(path, fileName):
     ret = []
-    for x in os.listdir('.'):
-        if os.path.isdir(x):
-            ret.append(findFile(fileName))
-        elif os.path.isfile(x) and fileName in os.path.splitext(x)[0]:
-            ret.append(os.path.splitext(x)[0])
-            return ret
+    for x in os.listdir(path):
+        allRelativePath = os.path.join(path, x)
+        if os.path.isdir(allRelativePath):
+            r = findFile(allRelativePath, fileName)
+            if r is not None and len(r) != 0:
+                ret.extend(r)
+        elif os.path.isfile(allRelativePath) and fileName in os.path.splitext(x)[0]:
+            ret.append(allRelativePath)
+    return ret
 
-print(findFile('test_ex.py'))
+print(findFile('.', 'pyvenv'))
 
 
 
