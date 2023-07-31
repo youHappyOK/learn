@@ -1,4 +1,5 @@
-from collections import namedtuple, deque, defaultdict, OrderedDict
+from collections import namedtuple, deque, defaultdict, OrderedDict, ChainMap, Counter
+import os, argparse
 
 # namedtuple是一个函数，它用来创建一个自定义的tuple对象，并且规定了tuple元素的个数，并可以用属性而不是索引来引用tuple的某个元素。
 Point = namedtuple('Point', ['x', 'y'])
@@ -54,8 +55,35 @@ class LastUpdatedOrderedDict(OrderedDict):
             print('add:', (key, value))
         OrderedDict.__setitem__(self, key, value)
 
+# 构造缺省参数:
+defaults = {
+    'color': 'red',
+    'user': 'guest'
+}
 
+# 构造命令行参数:
+parser = argparse.ArgumentParser()
+parser.add_argument('-u', '--user')
+parser.add_argument('-c', '--color')
+namespace = parser.parse_args()
+command_line_args = { k: v for k, v in vars(namespace).items() if v }
 
+# 组合成ChainMap:
+combined = ChainMap(command_line_args, os.environ, defaults)
+
+# 打印参数:
+print('color=%s' % combined['color'])
+print('user=%s' % combined['user'])
+
+c = Counter()
+for ch in 'programing':
+    c[ch] = c[ch] + 1
+
+print(c)
+
+c.update('hello') # 也可以一次性update
+
+print(c)
 
 
 
