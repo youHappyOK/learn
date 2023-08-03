@@ -29,7 +29,8 @@ class Example(QWidget):
 
         self.setGeometry(300, 300, 300, 220)
         self.setWindowTitle('Icon')
-        self.setWindowIcon(QIcon('web.png'))
+        # windows可以，macos不行
+        self.setWindowIcon(QIcon('java.png'))
 
         self.show()
 
