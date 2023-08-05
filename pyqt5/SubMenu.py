@@ -12,6 +12,8 @@ class Example(QMainWindow):
     def initUI(self):
 
         menubar = self.menuBar()
+        # macos需要加这一句
+        menubar.setNativeMenuBar(False)
         fileMenu = menubar.addMenu('File')
 
         impMenu = QMenu('Import', self)
