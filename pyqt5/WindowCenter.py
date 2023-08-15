@@ -20,7 +20,7 @@ class Example(QWidget):
 
 
     def center(self):
-
+        # 获得主窗口所在的框架
         qr = self.frameGeometry()
         # 计算桌面的中心位置
         cp = QDesktopWidget().availableGeometry().center()

@@ -33,3 +33,7 @@ my_tuple = ('apple', 'banana', 'orange')
 # 创建一个新的元组来修改或扩展
 modified_tuple = my_tuple + ('kiwi',)
 print(modified_tuple)  # 输出: ('apple', 'banana', 'orange', 'kiwi')
+
+postions = [(1,2), (2,3), (3,4)]
+names = ['jack', 'tommy', 'frank']
+print(list(zip(postions, names)))
