@@ -33,6 +33,7 @@ class Example(QMainWindow):
     def initUI(self):
 
         self.c = Communicate()
+        # 将信号和close绑定
         self.c.closeApp.connect(self.close)
 
         self.setGeometry(300, 300, 290, 150)
@@ -41,7 +42,7 @@ class Example(QMainWindow):
 
 
     def mousePressEvent(self, event):
-
+        # 单击左键时发出信号
         self.c.closeApp.emit()
 
 
