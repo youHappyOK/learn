@@ -58,7 +58,7 @@ class Example(QWidget):
                 self.table_widget.setItem(row, col, item)
 
         self.setGeometry(300, 300, 1100, 500)
-        self.setWindowTitle("so fuck you nvida")
+        self.setWindowTitle("so nvidia fuck you")
         self.setLayout(layoutV)
         self.show()
 
