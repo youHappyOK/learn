@@ -37,6 +37,8 @@ class Example(QWidget):
         vbox.addWidget(cal)
 
         self.lbl = QLabel(self)
+
+        # 使用selectedDate()方法获取选中的日期，然后把日期对象转成字符串，在标签里面显示出来
         date = cal.selectedDate()
         self.lbl.setText(date.toString())
 
