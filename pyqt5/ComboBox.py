@@ -13,8 +13,9 @@ Last edited: August 2017
 """
 
 from PyQt5.QtWidgets import (QWidget, QLabel,
-    QComboBox, QApplication)
+                             QComboBox, QApplication)
 import sys
+
 
 class Example(QWidget):
 
@@ -23,9 +24,7 @@ class Example(QWidget):
 
         self.initUI()
 
-
     def initUI(self):
-
         self.lbl = QLabel("Ubuntu", self)
 
         combo = QComboBox(self)
@@ -44,15 +43,12 @@ class Example(QWidget):
         self.setWindowTitle('QComboBox')
         self.show()
 
-
     def onActivated(self, text):
-
         self.lbl.setText(text)
         self.lbl.adjustSize()
 
 
 if __name__ == '__main__':
-
     app = QApplication(sys.argv)
     ex = Example()
     sys.exit(app.exec_())
