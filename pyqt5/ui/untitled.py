@@ -102,13 +102,7 @@ class Ui_MainWindow(object):
         这种机制可以简化信号和槽的手动连接过程，避免了显式调用 connect 方法来连接信号和槽。特别是在使用 Qt Designer 创建界面并生成代码时，该机制能够自动连接界面中定义的信号和槽。
 
         需要注意的是，QtCore.QMetaObject.connectSlotsByName(MainWindow) 仅适用于使用正确的命名规则来命名信号和槽的情况。如果命名规则不匹配或存在其他问题，该机制可能无法正常工作，此时需要手动进行信号和槽的连接。
-        
-        在使用 QtCore.QMetaObject.connectSlotsByName(MainWindow) 时，它会自动连接 MainWindow 对象（或类）中的子控件的信号和槽函数。这意味着它只会连接 MainWindow 直接包含的子控件的信号和槽函数，而不会连接孙子控件或更深层次的控件。
-
-        例如，如果 MainWindow 包含 QWidget A 和 QWidget B，并且 QWidget A 又包含 QWidget C，那么 connectSlotsByName(MainWindow) 只会连接 MainWindow、A、B 这三者的信号和槽函数，而不会连接到 C 的信号和槽函数。
-
-        如果您需要连接更深层次的孙控件或后代控件的信号和槽函数，您可能需要手动编写代码来连接这些控件的信号和槽函数，或者使用其他适当的方法来处理。
-        
+    
         '''
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -141,6 +135,7 @@ class Ui_MainWindow(object):
 
 
 # pyuic生成py文件后，需要增加这一段
+# 不要用这种方式，最好继承下，参考childUi2.py的写法
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)  # 创建一个QApplication，也就是你要开发的软件app
     MainWindow = QtWidgets.QMainWindow()  # 创建一个QMainWindow，用来装载你需要的各种组件、控件
