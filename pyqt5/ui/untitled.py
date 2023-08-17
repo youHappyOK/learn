@@ -14,6 +14,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        # setObjectName 函数被用来给该实例设置一个对象名称为 "MainWindow"。
+        # 之后，在代码中可以使用这个对象名称来引用窗口对象，进行一些操作，如添加控件、设置样式等。
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -91,7 +93,29 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
+
+        '''
+        QtCore.QMetaObject.connectSlotsByName(MainWindow) 是一个用于自动连接信号和槽的机制。它基于对象的名称和信号/槽的命名规则，自动连接具有匹配名称的信号和槽。
+
+        当你调用 QtCore.QMetaObject.connectSlotsByName(MainWindow) 时，它会查找 MainWindow 对象及其子对象中的所有方法。对于命名为 on_<objectName>_<signalName> 的方法，它会将它作为槽函数，并将与信号名称匹配的信号自动连接到槽函数上。
+
+        这种机制可以简化信号和槽的手动连接过程，避免了显式调用 connect 方法来连接信号和槽。特别是在使用 Qt Designer 创建界面并生成代码时，该机制能够自动连接界面中定义的信号和槽。
+
+        需要注意的是，QtCore.QMetaObject.connectSlotsByName(MainWindow) 仅适用于使用正确的命名规则来命名信号和槽的情况。如果命名规则不匹配或存在其他问题，该机制可能无法正常工作，此时需要手动进行信号和槽的连接。
+        
+        在使用 QtCore.QMetaObject.connectSlotsByName(MainWindow) 时，它会自动连接 MainWindow 对象（或类）中的子控件的信号和槽函数。这意味着它只会连接 MainWindow 直接包含的子控件的信号和槽函数，而不会连接孙子控件或更深层次的控件。
+
+        例如，如果 MainWindow 包含 QWidget A 和 QWidget B，并且 QWidget A 又包含 QWidget C，那么 connectSlotsByName(MainWindow) 只会连接 MainWindow、A、B 这三者的信号和槽函数，而不会连接到 C 的信号和槽函数。
+
+        如果您需要连接更深层次的孙控件或后代控件的信号和槽函数，您可能需要手动编写代码来连接这些控件的信号和槽函数，或者使用其他适当的方法来处理。
+        
+        '''
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+        MainWindow.show()  # 执行QMainWindow的show()方法，显示这个QMainWindow
+
+
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -104,6 +128,17 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "PushButton"))
         self.label_4.setText(_translate("MainWindow", "TextLabel"))
 
+    # 自定义槽函数的命名规则：on+使用setObjectName设置的名称+信号名称4
+    # 有bug
+    @QtCore.pyqtSlot(str)
+    def on_lineEdit_textChanged(self, text):
+        print('so nvidia fxxk you')
+        try:
+            num = int(text)
+            self.lcdNumber.display(num)
+        except ValueError:
+            pass
+
 
 # pyuic生成py文件后，需要增加这一段
 if __name__ == "__main__":
@@ -111,5 +146,5 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()  # 创建一个QMainWindow，用来装载你需要的各种组件、控件
     ui = Ui_MainWindow()  # ui是Ui_MainWindow()类的实例化对象
     ui.setupUi(MainWindow)  # 执行类中的setupUi方法，方法的参数是第二步中创建的QMainWindow
-    MainWindow.show()  # 执行QMainWindow的show()方法，显示这个QMainWindow
+
     sys.exit(app.exec_())  # 使用exit()或者点击关闭按钮退出QApplicat
