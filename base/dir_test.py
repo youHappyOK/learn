@@ -13,7 +13,7 @@ print(os.environ)
 print(os.environ.get('PATH'))
 
 # 查看当前目录的绝对路径:
-print(os.path.abspath('.'))
+print(os.path.abspath('..'))
 
 # 在某个目录下创建一个新目录，首先把新目录的完整路径表示出来
 # 把两个路径合成一个时，不要直接拼字符串，而要通过os.path.join()函数，这样可以正确处理不同操作系统的路径分隔符
@@ -37,11 +37,11 @@ print(os.path.splitext('/path/to/file.txt'))
 # os.remove('test.py')
 
 # 列出当前目录下的所有目录，列表生成式
-print([x for x in os.listdir('.') if os.path.isdir(x)])
-print([x for x in os.listdir('.') if os.path.isfile(x) and os.path.splitext(x)[1] =='.py'])
+print([x for x in os.listdir('..') if os.path.isdir(x)])
+print([x for x in os.listdir('..') if os.path.isfile(x) and os.path.splitext(x)[1] == '.py'])
 
 # ls -l
-print([x for x in os.listdir('.')])
+print([x for x in os.listdir('..')])
 
 def findFile(path, fileName):
     ret = []
@@ -55,7 +55,7 @@ def findFile(path, fileName):
             ret.append(allRelativePath)
     return ret
 
-print(findFile('.', 'pyvenv'))
+print(findFile('..', 'pyvenv'))
 
 
 
