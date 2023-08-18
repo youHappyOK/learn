@@ -3,7 +3,7 @@ import sys
 
 from PyQt5.QtWidgets import QMainWindow, QApplication
 
-from testQD import Ui_MainWindow
+from test import Ui_MainWindow
 
 
 # 注意，在tab页中拖拽layout，他会在layout外面隐式再嵌套一个widget，所以转换后的py文件还需要手动改下，

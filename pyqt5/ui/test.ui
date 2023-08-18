@@ -6,14 +6,41 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1001</width>
-    <height>718</height>
+    <width>961</width>
+    <height>656</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>961</width>
+    <height>656</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>961</width>
+    <height>656</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -103,7 +130,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="1,2,1">
+       <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="2,3,1">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0">
           <item>
@@ -141,7 +168,7 @@
              </size>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_3">
              <property name="sizePolicy">
@@ -162,12 +189,12 @@
                 <height>191</height>
                </rect>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout_8">
+              <layout class="QVBoxLayout" name="verticalLayout_8" stretch="0,0,0">
                <property name="spacing">
                 <number>1</number>
                </property>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_11">
+                <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="1,3,1">
                  <property name="spacing">
                   <number>1</number>
                  </property>
@@ -198,6 +225,12 @@
                      <height>0</height>
                     </size>
                    </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>30</height>
+                    </size>
+                   </property>
                    <property name="mouseTracking">
                     <bool>true</bool>
                    </property>
@@ -211,6 +244,12 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>30</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>选择</string>
                    </property>
@@ -219,7 +258,7 @@
                 </layout>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_12">
+                <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,3,1">
                  <item>
                   <widget class="QLabel" name="label_2">
                    <property name="sizePolicy">
@@ -247,6 +286,12 @@
                      <height>0</height>
                     </size>
                    </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>30</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -257,6 +302,12 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>30</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>选择</string>
                    </property>
@@ -265,7 +316,10 @@
                 </layout>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_13">
+                <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="1,3,1,3">
+                 <property name="spacing">
+                  <number>1</number>
+                 </property>
                  <item>
                   <widget class="QLabel" name="label_3">
                    <property name="sizePolicy">
@@ -291,6 +345,12 @@
                     <size>
                      <width>0</width>
                      <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>30</height>
                     </size>
                    </property>
                   </widget>
@@ -320,6 +380,12 @@
                     <size>
                      <width>0</width>
                      <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>30</height>
                     </size>
                    </property>
                   </widget>
@@ -376,9 +442,9 @@
                   <property name="geometry">
                    <rect>
                     <x>20</x>
-                    <y>50</y>
-                    <width>62</width>
-                    <height>281</height>
+                    <y>40</y>
+                    <width>61</width>
+                    <height>171</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -440,9 +506,9 @@
                   <property name="geometry">
                    <rect>
                     <x>20</x>
-                    <y>50</y>
-                    <width>71</width>
-                    <height>281</height>
+                    <y>40</y>
+                    <width>61</width>
+                    <height>171</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_10">
@@ -504,14 +570,14 @@
                   <property name="geometry">
                    <rect>
                     <x>20</x>
-                    <y>50</y>
-                    <width>71</width>
-                    <height>281</height>
+                    <y>40</y>
+                    <width>61</width>
+                    <height>171</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_11" stretch="0,0,0">
                    <property name="spacing">
-                    <number>-1</number>
+                    <number>6</number>
                    </property>
                    <item>
                     <widget class="QCheckBox" name="checkBox_7">
@@ -564,6 +630,12 @@
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>25</height>
+                  </size>
+                 </property>
                  <item>
                   <property name="text">
                    <string>循环1-17</string>
@@ -584,47 +656,28 @@
               </layout>
              </widget>
             </widget>
-            <widget class="QWidget" name="tab">
+            <widget class="QWidget" name="tab_5">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <attribute name="title">
-              <string>Page</string>
+              <string>使用说明</string>
              </attribute>
-             <widget class="QWidget" name="verticalLayoutWidget">
+             <widget class="QTextEdit" name="textEdit_2">
               <property name="geometry">
                <rect>
-                <x>120</x>
-                <y>240</y>
-                <width>160</width>
-                <height>80</height>
+                <x>60</x>
+                <y>20</y>
+                <width>351</width>
+                <height>201</height>
                </rect>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout_5">
-               <item>
-                <widget class="QPushButton" name="pushButton_9">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>PushButton</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pushButton_10">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>PushButton</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
              </widget>
             </widget>
            </widget>
@@ -760,8 +813,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1001</width>
-     <height>24</height>
+     <width>961</width>
+     <height>23</height>
     </rect>
    </property>
    <property name="sizePolicy">
