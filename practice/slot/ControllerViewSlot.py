@@ -6,6 +6,8 @@
 from practice.view.ControllerView import *
 from practice.repository.SettingRepository import *
 from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QRadioButton
+from PyQt5.QtCore import pyqtSlot
 
 
 class ControllerViewSlot(Ui_MainWindow):
@@ -14,54 +16,128 @@ class ControllerViewSlot(Ui_MainWindow):
         super().__init__()
         self.settingRepository = SettingRepository()
 
-    def getMainTaskCheckBox(self):
+    def getMainTask(self):
+        self.settingRepository.mainTask = ''
         if self.checkBox.checkState() == Qt.Checked:
-            self.settingRepository.mainTask += self.checkBox.text()
+            self.settingRepository.mainTask += self.checkBox.text() + ','
         if self.checkBox_2.checkState() == Qt.Checked:
-            self.settingRepository.mainTask += self.checkBox.text()
+            self.settingRepository.mainTask += self.checkBox.text() + ','
         if self.checkBox_3.checkState() == Qt.Checked:
-            self.settingRepository.mainTask += self.checkBox.text()
+            self.settingRepository.mainTask += self.checkBox.text() + ','
+        print('主线任务复选框变动', self.settingRepository.mainTask)
+
+    def getSideTask(self):
+        self.settingRepository.sideTask = ''
+        if self.checkBox_4.checkState() == Qt.Checked:
+            self.settingRepository.sideTask += self.checkBox_4.text() + ','
+        if self.checkBox_5.checkState() == Qt.Checked:
+            self.settingRepository.sideTask += self.checkBox_5.text() + ','
+        if self.checkBox_6.checkState() == Qt.Checked:
+            self.settingRepository.sideTask += self.checkBox_6.text() + ','
+        print('支线任务复选框变动', self.settingRepository.sideTask)
+
+    def getDailyTask(self):
+        if self.radioButton.isChecked():
+            self.settingRepository.dailyTask = self.radioButton.text()
+        if self.radioButton_2.isChecked():
+            self.settingRepository.dailyTask = self.radioButton_2.text()
+        if self.radioButton_3.isChecked():
+            self.settingRepository.dailyTask = self.radioButton_3.text()
+        print('日常任务单选框变动', self.settingRepository.dailyTask)
 
     # 点击保存按钮槽函数
-    @QtCore.pyqtSlot()
+    # my_slot 方法被使用 @pyqtSlot(int) 装饰器声明为一个槽，它只接受一个整数类型的参数。这样做可以确保连接信号和槽时，参数类型匹配，从而避免可能的问题
+    # @pyqtSlot中的参数填错，可能导致不执行
+    # 加@pyqtSlot()保证只执行一次，有些QWidget有两个信号，信号：clicked()、clicked(bool)有两个，所以执行了两遍。
+    @pyqtSlot(bool)
     def on_pushButton_5_clicked(self):
         self.settingRepository.saveSettingToFile()
 
     # 编辑程序位置文本框槽函数
-    @QtCore.pyqtSlot(str)
+    @pyqtSlot(str)
     def on_lineEdit_textChanged(self, text):
+        print('程序位置', text)
         self.settingRepository.progressPath = text.strip()
 
     # 编辑账号位置文本框槽函数
-    @QtCore.pyqtSlot(str)
+    @pyqtSlot(str)
     def on_lineEdit_2_textChanged(self, text):
+        print('账号位置', text)
         self.settingRepository.accountPath = text.strip()
 
     # 多开数量
-    @QtCore.pyqtSlot(str)
+    @pyqtSlot(str)
     def on_lineEdit_3_textChanged(self, text):
-        self.settingRepository.runNum = int(text.strip)
+        print('多开数量', text)
+        self.settingRepository.runNum = text.strip()
 
     # 启动延迟
-    @QtCore.pyqtSlot(str)
-    def on_lineEdit_3_textChanged(self, text):
-        self.settingRepository.delayNum = int(text.strip)
-
+    @pyqtSlot(str)
+    def on_lineEdit_4_textChanged(self, text):
+        print('启动延迟数量', text)
+        self.settingRepository.delayNum = text.strip()
 
     # 主线checkbox选择状态改变
-    @QtCore.pyqtSlot()
+    @pyqtSlot(int)
     def on_checkBox_stateChanged(self):
-        self.getMainTaskCheckBox()
+        self.getMainTask()
 
     # 主线checkbox选择状态改变
-    @QtCore.pyqtSlot()
+    @pyqtSlot(int)
     def on_checkBox_2_stateChanged(self):
-        self.getMainTaskCheckBox()
+        self.getMainTask()
 
     # 主线checkbox选择状态改变
-    @QtCore.pyqtSlot()
+    @pyqtSlot(int)
     def on_checkBox_3_stateChanged(self):
-        self.getMainTaskCheckBox()
+        self.getMainTask()
+
+    # 支线checkbox选择状态改变
+    @pyqtSlot(int)
+    def on_checkBox_4_stateChanged(self):
+        self.getSideTask()
+
+    # 支线checkbox选择状态改变
+    @pyqtSlot(int)
+    def on_checkBox_5_stateChanged(self):
+        self.getSideTask()
+
+    # 支线checkbox选择状态改变
+    @pyqtSlot(int)
+    def on_checkBox_6_stateChanged(self):
+        self.getSideTask()
+
+    # 日常任务选择状态改变
+    # radio_button_clicked函数被@pyqtSlot()装饰器标记，而不需要指定任何参数类型，因为clicked事件不传递参数。当单选按钮被点击时，该函数会被调用，并输出一条消息
+    @pyqtSlot()
+    def on_radioButton_clicked(self):
+        self.getDailyTask()
+
+    # 日常任务选择状态改变
+    @pyqtSlot()
+    def on_radioButton_2_clicked(self):
+        self.getDailyTask()
+
+    # 日常任务选择状态改变
+    @pyqtSlot()
+    def on_radioButton_3_clicked(self):
+        self.getDailyTask()
+
+    @pyqtSlot(int)
+    def on_comboBox_currentIndexChanged(self):
+        self.settingRepository.weeklyTask = self.comboBox.currentText()
+        print('循环任务下拉变动' + self.settingRepository.weeklyTask)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
