@@ -16,7 +16,6 @@ class IniFileRepository:
         try:
             # 读取配置文件
             self.configParser.read(self.configPath, encoding='utf8')
-
             # 检查是否成功读取配置文件
             if self.configParser.sections():
                 print("Sections in config:", self.configParser.sections())

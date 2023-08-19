@@ -1,7 +1,7 @@
 from practice.repository.IniFileRepository import IniFileRepository
 
 
-class SettingRepository(IniFileRepository):
+class SettingService(IniFileRepository):
 
     def __init__(self):
         super().__init__()
@@ -43,5 +43,22 @@ class SettingRepository(IniFileRepository):
             with open(self.configPath, 'w', encoding="utf8") as f:
                 self.configParser.write(f)
             print('保存成功！')
-        except KeyError as e:
+        except Exception as e:
             print('AttributeError:', e)
+
+    # 读取配置并返回
+    def readSetting(self):
+        try:
+            #
+            print('读取文件配置')
+            self.progressPath = self.configParser.get('setting', '程序位置')
+            self.accountPath = self.configParser.get('setting', '账号位置')
+            self.runNum = self.configParser.get('setting', '多开数量')
+            self.delayNum = self.configParser.get('setting', '启动延迟')
+            self.mainTask = self.configParser.get('setting', '主线')
+            self.sideTask = self.configParser.get('setting', '支线')
+            self.dailyTask = self.configParser.get('setting', '日常')
+            self.weeklyTask = self.configParser.get('setting', '循环任务')
+        except Exception as e:
+            print('读取文件配置', e)
+
