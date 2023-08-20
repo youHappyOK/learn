@@ -202,7 +202,7 @@ class ControllerViewSlot(Ui_MainWindow):
     @pyqtSlot(bool)
     def on_pushButton_clicked(self):
         print('启动线程')
-        self.threadProcess.runProcessThread()
+        self.threadProcess.runProcessThread(1)
 
     @pyqtSlot(bool)
     def on_pushButton_2_clicked(self):
