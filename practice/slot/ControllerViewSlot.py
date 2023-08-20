@@ -4,7 +4,8 @@
 # 所以，如果一个模块被直接运行，则它自己为顶层模块，不存在层次结构，所以找不到其他的相对路径，
 # 所以如果直接运行python xx.py ，而xx.py有相对导入就会报错
 from practice.view.ControllerView import *
-from service.SettingService import *
+from practice.service.SettingService import *
+from practice.service.AccountService import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtSlot
 
@@ -13,7 +14,9 @@ class ControllerViewSlot(Ui_MainWindow):
 
     def __init__(self):
         super().__init__()
-        self.settingService = SettingService()
+        self.iniRepo = IniFileRepository()
+        self.settingService = SettingService(self.iniRepo)
+        self.accountService = AccountService(self.iniRepo)
 
     def getMainTask(self):
         self.settingService.mainTask = ''
@@ -27,6 +30,25 @@ class ControllerViewSlot(Ui_MainWindow):
         if self.settingService.mainTask.endswith(','):
             self.settingService.mainTask = self.settingService.mainTask[:-1]
         print('主线任务复选框变动', self.settingService.mainTask)
+
+    def showAccount(self):
+        print('加载账号信息...')
+        # 先清空，再加载
+        self.tableWidget.setRowCount(0)
+        accountInfo = self.accountService.readAccount()
+        if accountInfo:
+            for row, rowList in enumerate(accountInfo):
+                row_position = self.tableWidget.rowCount()
+                self.tableWidget.insertRow(row_position)
+                for col, item in enumerate(rowList):
+                    tableWidgetItem = QtWidgets.QTableWidgetItem(str(item))
+                    tableWidgetItem.setTextAlignment(Qt.AlignCenter)
+                    if col == 0:
+                        self.tableWidget.setItem(row, 3, tableWidgetItem)
+                    if col == 1:
+                        self.tableWidget.setItem(row, 4, tableWidgetItem)
+                    if col == 2:
+                        self.tableWidget.setItem(row, 5, tableWidgetItem)
 
     def getSideTask(self):
         self.settingService.sideTask = ''
@@ -171,6 +193,8 @@ class ControllerViewSlot(Ui_MainWindow):
                 self.comboBox.setCurrentIndex(index)
                 # 找到匹配项后可以直接跳出循环，如果需要设置多个选中项可以去掉此行
                 break
+        # 加载账号
+        self.showAccount()
 
 
 

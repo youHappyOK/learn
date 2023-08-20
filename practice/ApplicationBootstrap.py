@@ -9,6 +9,8 @@ class ApplicationBootstrp(QMainWindow, ControllerViewSlot):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        # 窗口打开时加载账号信息
+        self.showAccount()
 
 
 if __name__ == '__main__':

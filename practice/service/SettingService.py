@@ -1,10 +1,10 @@
 from practice.repository.IniFileRepository import IniFileRepository
 
 
-class SettingService(IniFileRepository):
+class SettingService:
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, iniRepo: IniFileRepository):
+        self.configParser = iniRepo.configParser
         '''
         基本设置读取
         '''
