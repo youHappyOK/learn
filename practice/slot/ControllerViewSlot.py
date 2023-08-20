@@ -6,6 +6,7 @@
 from practice.view.ControllerView import *
 from practice.service.SettingService import *
 from practice.service.AccountService import *
+from practice.thead.ThreadProcess import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtSlot
 
@@ -17,6 +18,7 @@ class ControllerViewSlot(Ui_MainWindow):
         self.iniRepo = IniFileRepository()
         self.settingService = SettingService(self.iniRepo)
         self.accountService = AccountService(self.iniRepo)
+        self.threadProcess = ThreadProcess()
 
     def getMainTask(self):
         self.settingService.mainTask = ''
@@ -195,6 +197,29 @@ class ControllerViewSlot(Ui_MainWindow):
                 break
         # 加载账号
         self.showAccount()
+
+    # 启动线程
+    @pyqtSlot(bool)
+    def on_pushButton_clicked(self):
+        print('启动线程')
+        self.threadProcess.runProcessThread()
+
+    @pyqtSlot(bool)
+    def on_pushButton_2_clicked(self):
+        print('暂停某个线程')
+        self.threadProcess.pauseProcessThread(0)
+
+    @pyqtSlot(bool)
+    def on_pushButton_3_clicked(self):
+        print('恢复某个线程')
+        self.threadProcess.resumeProcessThread(0)
+
+    @pyqtSlot(bool)
+    def on_pushButton_4_clicked(self):
+        print('停止某个线程')
+        self.threadProcess.stopProcessThread(0)
+
+
 
 
 
