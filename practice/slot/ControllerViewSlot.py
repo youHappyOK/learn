@@ -6,7 +6,7 @@
 from practice.view.ControllerView import *
 from practice.service.SettingService import *
 from practice.service.AccountService import *
-from practice.thead.ThreadProcess import *
+from practice.thread.ThreadProcess import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMessageBox
@@ -226,6 +226,7 @@ class ControllerViewSlot(Ui_MainWindow):
                                      "Are you sure to quit?", QMessageBox.Yes |
                                      QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
+            self.threadProcess.unbindThread()
             event.accept()
         else:
             event.ignore()

@@ -10,20 +10,22 @@ class ThreadProcess:
         self.threadGroup = []
 
         # 初始化全局大漠对象
-        dm = XiaoPy.gl_init("ly901107a81915b5c54de20f31cfa5a0a00ffad8", "lexgeeker01234567890")
-        py = XiaoPy()
+        self.dm = XiaoPy.gl_init("ly901107a81915b5c54de20f31cfa5a0a00ffad8", "lexgeeker01234567890")
+        self.py = XiaoPy()
         # 设置操作对象
-        py.set_win(dm)
-        path = XiaoPy.get_path()
-        print('项目路径 %s' % path)
+        self.py.set_win(self.dm)
+        self.path = XiaoPy.get_path()
+        print('项目路径 %s' % self.path)
+        self.resourcePath = "\\".join(str(self.path).split("\\")[:-1]) + "\\" + 'resource'
         # 设置资源文件路径（图片等）
-        py.set_path(path)
+        self.py.set_path(self.resourcePath)
+        print('资源文件路径 %s' % self.resourcePath)
 
     # 启动threadNum个线程
     def runProcessThread(self, threadNum):
         print('启动 %s 个线程...' % threadNum)
         for i in range(threadNum):
-            threadObj = threading.Thread(target=self.runFuc, args=(i, self.threadLocal), name='mainThread')
+            threadObj = threading.Thread(target=self.runFuc, args=(i, ), name='mainThread')
             pauseFlag = threading.Event()  # 用于暂停线程的标识
             pauseFlag.set()  # 设置为True
             stopFlag = threading.Event()  # 用于停止线程的标识
@@ -35,8 +37,8 @@ class ThreadProcess:
         for threadInfo in self.threadGroup:
             threadInfo.get('threadObj').start()
 
-    def runFuc(self, threadIndex, threadLocal):
-        Task.processTask(self.threadGroup[threadIndex], threadIndex)
+    def runFuc(self, threadIndex):
+        Task.processTask(self.threadGroup[threadIndex], threadIndex, self.resourcePath)
 
 
     # 暂定指定序号的线程
@@ -52,5 +54,6 @@ class ThreadProcess:
         self.threadGroup[threadIndex]['stopFlag'].clear()
         self.threadGroup[threadIndex]['pauseFlag'].set()
 
-    def unbindThread(self, threadIndex):
-        dm.
+    def unbindThread(self):
+        print('解绑窗口')
+        self.dm.UnBindWindow()
