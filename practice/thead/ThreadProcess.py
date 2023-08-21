@@ -8,7 +8,16 @@ class ThreadProcess:
 
     def __init__(self):
         self.threadGroup = []
-        self.threadLocal = threading.local()
+
+        # 初始化全局大漠对象
+        dm = XiaoPy.gl_init("ly901107a81915b5c54de20f31cfa5a0a00ffad8", "lexgeeker01234567890")
+        py = XiaoPy()
+        # 设置操作对象
+        py.set_win(dm)
+        path = XiaoPy.get_path()
+        print('项目路径 %s' % path)
+        # 设置资源文件路径（图片等）
+        py.set_path(path)
 
     # 启动threadNum个线程
     def runProcessThread(self, threadNum):
@@ -27,7 +36,7 @@ class ThreadProcess:
             threadInfo.get('threadObj').start()
 
     def runFuc(self, threadIndex, threadLocal):
-        Task.processTask(self.threadGroup[threadIndex], threadIndex, self.threadLocal)
+        Task.processTask(self.threadGroup[threadIndex], threadIndex)
 
 
     # 暂定指定序号的线程
@@ -42,3 +51,6 @@ class ThreadProcess:
     def stopProcessThread(self, threadIndex):
         self.threadGroup[threadIndex]['stopFlag'].clear()
         self.threadGroup[threadIndex]['pauseFlag'].set()
+
+    def unbindThread(self, threadIndex):
+        dm.

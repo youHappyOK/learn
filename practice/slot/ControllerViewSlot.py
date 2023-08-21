@@ -9,6 +9,8 @@ from practice.service.AccountService import *
 from practice.thead.ThreadProcess import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtWidgets import QMessageBox
+
 
 
 class ControllerViewSlot(Ui_MainWindow):
@@ -218,6 +220,16 @@ class ControllerViewSlot(Ui_MainWindow):
     def on_pushButton_4_clicked(self):
         print('停止某个线程')
         self.threadProcess.stopProcessThread(0)
+
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self, 'Message',
+                                     "Are you sure to quit?", QMessageBox.Yes |
+                                     QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
+
 
 
 
