@@ -1,12 +1,12 @@
 import injector
-from InjectorUserRepository import UserRepository
+from base.InjectorUserRepository import Repository
 
 
 class UserService2:
 
     @injector.inject
-    def __init__(self, userRepo: UserRepository):
-        self.userRepo = userRepo
+    def __init__(self, repo: Repository):
+        self.repo = repo
 
     def getUser(self):
-        return self.userRepo.getUser()
+        self.repo.sayHello()

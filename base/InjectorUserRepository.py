@@ -1,9 +1,8 @@
-class UserRepository:
-    def __init__(self, dbName):
-        # 初始化 UserRepository
-        print(dbName, '我被初始化了')
-        self.dbName = dbName
+class Repository:
+    def __init__(self, name):
+        print('init...')
+        self.name = name
 
-    def getUser(self):
+    def sayHello(self):
         # 获取用户数据的方法
-        return '123'
+        print(f"ok：{self.name}")
