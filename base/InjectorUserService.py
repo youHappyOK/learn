@@ -4,7 +4,7 @@ from InjectorUserRepository import UserRepository
 
 class UserService:
 
-    @injector.singleton
+    @injector.inject
     def __init__(self, userRepo: UserRepository):
         self.userRepo = userRepo
 

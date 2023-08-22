@@ -1,7 +1,7 @@
 class UserRepository:
-    def __init__(self):
+    def __init__(self, name):
         # 初始化 UserRepository
-        print('我被初始化了')
+        print(name, '我被初始化了')
 
     def getUser(self, user_id):
         # 获取用户数据的方法
