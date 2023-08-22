@@ -2,11 +2,11 @@ import threading
 import time
 from xiaopyDesktop import *
 from practice.resource.desc import *
+from practice.gameProcess.gameProcess import *
 
 class Task:
 
-    @staticmethod
-    def processTask(threadDict: dict, threadIndex, path):
+    def processTask(self, threadDict: dict, threadIndex, path):
         # todo 具体逻辑
         # 初始化线程pygame对象
         tdPy = XiaoPy()
@@ -14,9 +14,9 @@ class Task:
         tdDm = tdPy.td_init(threadIndex)
         # 设置大漠对象
         tdPy.set_win(tdDm)
-        # 设置字典文件
-        # tdPy.set_dict()
+        tdPy.set_level(0)
         threadDict['process'] = '枚举窗口'
+        gameProcess = GameProcess()
         # 状态初始值
         # 判断stopFlag是否设置标志位，设置了就正常运行，没设置直接结束
         while threadDict['stopFlag'].isSet():
@@ -30,6 +30,8 @@ class Task:
                 tdPy.set_hwnd(hwnd)
                 # 设置资源文件路径
                 tdPy.set_path(path)
+                # 设置字典文件
+                tdPy.set_dict(0, 'font.txt')
                 print('枚举窗口 hwnd: %s 成功' % hwnd)
                 threadDict['process'] = '绑定窗口'
             elif threadDict['process'] == '绑定窗口':
@@ -44,8 +46,9 @@ class Task:
                 task = [
                     Action(desc['wechat']).sleep(1).click(Point(1054, 417)).sleep(1).input('#c#CodeGlory').sleep(1)
                     .click(Point(1072, 498)).input('#c#lj6234466').sleep(1).s(1).cs(2),
+                    # 记得将状态机状态还原
                     Action(desc['readAgreement']).func(lambda: print('已阅读')).sleep(1).click(Point(1022, 624)).after('退出')
-                    .s(2).cs(3),
+                    .s(2).cs(None),
                     Action(desc['wechat']).func(lambda: print('未阅读')).click(Point(766, 560)).sleep(1).click(Point(1022, 624)).s(3).cs(None).after('退出'),
                 ]
                 # 设置状态机，先后顺序必须状态机
@@ -53,16 +56,26 @@ class Task:
                 print('账号登录成功')
                 threadDict['process'] = '选择区服'
             elif threadDict['process'] == '选择区服':
-                print('选择区服')
-                threadDict['process'] = '选择区服'
+                task = [
+                    Action(desc['enterGame']).func(lambda: print("找到进入游戏")).sleep(3).click(Point(1142, 693)).after('退出')
+                ]
+                tdPy.run(task)
+                print('选择区服成功')
+                threadDict['process'] = '角色选择'
             elif threadDict['process'] == '角色选择':
-                print('角色选择')
+                task = [
+                    Action(desc['角色选择大']).func(lambda: print("找到吉姆哥大")).click(Point(630, 387)).sleep(2),
+                    Action(desc['角色选择小']).func(lambda: print("找到吉姆哥小")).click(Point(541, 524)).sleep(2).after('退出')
+                ]
+                tdPy.run(task)
+                print('角色选择完成')
                 threadDict['process'] = '进入游戏'
             elif threadDict['process'] == '进入游戏':
                 print('进入游戏')
                 threadDict['process'] = '游戏操作'
             elif threadDict['process'] == '游戏操作':
                 print('游戏操作')
+                gameProcess.gameOpration()
                 threadDict['process'] = '任务完成'
             elif threadDict['process'] == '任务完成':
                 print('任务完成')

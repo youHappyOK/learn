@@ -2,7 +2,7 @@ import sys
 
 from PyQt5.QtWidgets import QMainWindow, QApplication
 
-from slot.ControllerViewSlot import *
+from practice.slot.ControllerViewSlot import *
 
 
 class ApplicationBootstrp(QMainWindow, ControllerViewSlot):

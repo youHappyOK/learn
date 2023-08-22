@@ -1,6 +1,3 @@
-import threading
-import time
-from PyQt5.QtCore import QTimer
 from practice.task.Task import *
 
 
@@ -20,6 +17,9 @@ class ThreadProcess:
         # 设置资源文件路径（图片等）
         self.py.set_path(self.resourcePath)
         print('资源文件路径 %s' % self.resourcePath)
+        self.py.set_level(0)
+        self.py.set_dict(0, 'font.txt')
+        self.task = Task()
 
     # 启动threadNum个线程
     def runProcessThread(self, threadNum):
@@ -38,7 +38,7 @@ class ThreadProcess:
             threadInfo.get('threadObj').start()
 
     def runFuc(self, threadIndex):
-        Task.processTask(self.threadGroup[threadIndex], threadIndex, self.resourcePath)
+        self.task.processTask(self.threadGroup[threadIndex], threadIndex, self.resourcePath)
 
 
     # 暂定指定序号的线程
