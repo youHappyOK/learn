@@ -40,7 +40,6 @@ if __name__ == "__main__":
 
     # 通过注入器实例创建MyClass的实例
     my_class_instance = injector_instance.get(MyClass)
-
     my_class_instance2 = injector_instance.get(MyClass2)
 
     # 调用方法，该方法依赖于注入的依赖项
