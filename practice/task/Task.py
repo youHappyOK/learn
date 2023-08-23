@@ -1,8 +1,14 @@
 import threading
 import time
+
+from PyQt5 import QtWidgets, Qt
+from PyQt5.QtCore import Qt
 from xiaopyDesktop import *
 from practice.resource.desc import *
 from practice.gameProcess.gameProcess import *
+from practice.common.Container import *
+from practice.slot.ControllerViewSlot import ControllerViewSlot
+
 
 class Task:
 
@@ -16,6 +22,7 @@ class Task:
         tdPy.set_win(tdDm)
         tdPy.set_level(0)
         threadDict['process'] = '枚举窗口'
+        self.setTableWidgetProcessItem('枚举窗口')
         gameProcess = GameProcess()
         # 状态初始值
         # 判断stopFlag是否设置标志位，设置了就正常运行，没设置直接结束
@@ -81,3 +88,9 @@ class Task:
                 print('任务完成')
                 threadDict['process'] = '任务完成'
             time.sleep(2)
+
+    def setTableWidgetProcessItem(self, process: str):
+        slot = BeanDefinitionMap.get("ControllerViewSlot")
+        tableWidgetItem = QtWidgets.QTableWidgetItem(str(process))
+        tableWidgetItem.setTextAlignment(Qt.AlignCenter)
+        slot.tableWidget.setItem(0, 2, tableWidgetItem)

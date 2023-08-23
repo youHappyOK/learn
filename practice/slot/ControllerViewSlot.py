@@ -10,6 +10,7 @@ from practice.thread.ThreadProcess import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMessageBox
+from practice.common.Container import *
 
 
 
@@ -21,6 +22,9 @@ class ControllerViewSlot(Ui_MainWindow):
         self.settingService = SettingService(self.iniRepo)
         self.accountService = AccountService(self.iniRepo)
         self.threadProcess = ThreadProcess()
+
+        # 将ControllerViewSlot放到container中
+        BeanDefinitionMap.set("ControllerViewSlot", self)
 
     def getMainTask(self):
         self.settingService.mainTask = ''
