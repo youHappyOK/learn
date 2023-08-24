@@ -1,3 +1,5 @@
+import time
+
 from practice.task.Task import *
 
 
@@ -21,21 +23,35 @@ class ThreadProcess:
         self.py.set_dict(0, 'font.txt')
         self.task = Task()
 
+    def runProcessMainThread(self):
+        runProcessMainThread = threading.Thread(target=self.runProcessThread, name='runProcessMainThread')
+        runProcessMainThread.start()
+
+
     # 启动threadNum个线程
-    def runProcessThread(self, threadNum):
+    def runProcessThread(self):
+        bootStrap = BeanDefinitionMap.get("ApplicationBootstrp")
+        # 多开数量
+        threadNum = bootStrap.readIniFileService.readThreadNum()
+        # 启动延迟
+        readDelaySeconds = bootStrap.readIniFileService.readDelaySeconds()
+        # 账号列表
+        accountInfoList = bootStrap.readIniFileService.readAccountInfo()
         print('启动 %s 个线程...' % threadNum)
         for i in range(threadNum):
-            threadObj = threading.Thread(target=self.runFuc, args=(i, ), name='mainThread')
+            threadObj = threading.Thread(target=self.runFuc, args=(i, ), name='runProcessThread')
             pauseFlag = threading.Event()  # 用于暂停线程的标识
             pauseFlag.set()  # 设置为True
             stopFlag = threading.Event()  # 用于停止线程的标识
             stopFlag.set()  # 将runningFlag设置为True
-            threadDict = {'threadObj': threadObj, 'pauseFlag': pauseFlag, 'stopFlag': stopFlag}
+            threadDict = {'threadObj': threadObj, 'pauseFlag': pauseFlag, 'stopFlag': stopFlag, 'accountInfo': accountInfoList[i]}
             # 加入线程组
             self.threadGroup.append(threadDict)
         # 启动线程组
         for threadInfo in self.threadGroup:
             threadInfo.get('threadObj').start()
+            # 这里sleep的时间太长了，必须在runProcessThread再套一个线程，不然pyqt5前台会卡死
+            time.sleep(readDelaySeconds)
 
     def runFuc(self, threadIndex):
         self.task.processTask(self.threadGroup[threadIndex], threadIndex, self.resourcePath)
@@ -54,6 +70,18 @@ class ThreadProcess:
         self.threadGroup[threadIndex]['stopFlag'].clear()
         self.threadGroup[threadIndex]['pauseFlag'].set()
 
+    # 关闭前台页面时触发
     def unbindThread(self):
+        # 多开数量
+        bootStrap = BeanDefinitionMap.get("ApplicationBootstrp")
+        threadNum = int(bootStrap.readIniFileService.readThreadNum())
         print('解绑窗口')
+        for i in range(threadNum):
+            if 'tdDm' in self.threadGroup[i]:
+                try:
+                    print('解绑并停止线程: %s, 解绑窗口:%s 成功' % (self.threadGroup[i]['threadIdent'], self.threadGroup[i]['hwnd']))
+                    self.threadGroup[i]['tdDm'].UnBindWindow()
+                    self.stopProcessThread(i)
+                except Exception as e:
+                    print(e)
         self.dm.UnBindWindow()

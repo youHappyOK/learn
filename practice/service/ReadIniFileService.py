@@ -32,3 +32,25 @@ class ReadIniFileService:
         retDict['dailyTaskList'] = dailyTaskList
         retDict['weeklyTaskList'] = weeklyTaskList
         return retDict
+
+    def readThreadNum(self) -> int:
+        threadNum = self.configParser.get('setting', '多开数量').strip()
+        return int(threadNum)
+
+    def readDelaySeconds(self) -> int:
+        delaySeconds = self.configParser.get('setting', '启动延迟').strip()
+        return int(delaySeconds)
+
+    def readAccountInfo(self) -> dict:
+        accountPath = self.configParser.get('setting', '账号位置')
+        retAccountInfo = dict()
+        if os.path.exists(accountPath):
+            with open(accountPath, 'r', encoding='utf8') as f:
+                lines = f.readlines()
+                if lines:
+                    for index, line in enumerate(lines):
+                        accountPwdList = line.strip('\n').split('|')
+                        retAccountInfo[index] = accountPwdList[0] + '|' + accountPwdList[1]
+        else:
+            print('账号文件路径不存在！')
+        return retAccountInfo

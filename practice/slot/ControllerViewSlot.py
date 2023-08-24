@@ -22,12 +22,12 @@ class ControllerViewSlot(Ui_MainWindow):
         self.readIniFileService = ReadIniFileService(self.iniRepo)
         self.threadProcess = ThreadProcess()
 
-    def tableWidgetHandleSignal(self, message):
+    def tableWidgetHandleSignal(self, row, message):
         print(f"tableWidgetHandle signal: {message}")
         bootStrap = BeanDefinitionMap.get("ApplicationBootstrp")
         tableWidgetItem = QtWidgets.QTableWidgetItem(message)
         tableWidgetItem.setTextAlignment(Qt.AlignCenter)
-        bootStrap.tableWidget.setItem(0, 2, tableWidgetItem)
+        bootStrap.tableWidget.setItem(row, 2, tableWidgetItem)
 
     def textEditHandleSignal(self, log):
         print(f"textEditHandle signal: {log}")
@@ -221,7 +221,7 @@ class ControllerViewSlot(Ui_MainWindow):
     @pyqtSlot(bool)
     def on_pushButton_clicked(self):
         print('启动线程')
-        self.threadProcess.runProcessThread(1)
+        self.threadProcess.runProcessMainThread()
 
     @pyqtSlot(bool)
     def on_pushButton_2_clicked(self):
