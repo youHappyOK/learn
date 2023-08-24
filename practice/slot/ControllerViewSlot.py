@@ -5,7 +5,7 @@
 # 所以如果直接运行python xx.py ，而xx.py有相对导入就会报错
 from practice.view.ControllerView import *
 from practice.service.SettingService import *
-from practice.service.AccountService import *
+from practice.service.ReadIniFileService import *
 from practice.thread.ThreadProcess import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtSlot
@@ -19,7 +19,7 @@ class ControllerViewSlot(Ui_MainWindow):
         super().__init__()
         self.iniRepo = IniFileRepository()
         self.settingService = SettingService(self.iniRepo)
-        self.accountService = AccountService(self.iniRepo)
+        self.readIniFileService = ReadIniFileService(self.iniRepo)
         self.threadProcess = ThreadProcess()
 
     def tableWidgetHandleSignal(self, message):
@@ -28,6 +28,15 @@ class ControllerViewSlot(Ui_MainWindow):
         tableWidgetItem = QtWidgets.QTableWidgetItem(message)
         tableWidgetItem.setTextAlignment(Qt.AlignCenter)
         bootStrap.tableWidget.setItem(0, 2, tableWidgetItem)
+
+    def textEditHandleSignal(self, log):
+        print(f"textEditHandle signal: {log}")
+        bootStrap = BeanDefinitionMap.get("ApplicationBootstrp")
+        # 滚动打印在前台页面上s
+        cursor = bootStrap.textEdit.textCursor()
+        cursor.movePosition(cursor.End)
+        cursor.insertText(log + '\n')
+        bootStrap.textEdit.setTextCursor(cursor)
 
 
     def getMainTask(self):
@@ -47,7 +56,7 @@ class ControllerViewSlot(Ui_MainWindow):
         print('加载账号信息...')
         # 先清空，再加载
         self.tableWidget.setRowCount(0)
-        accountInfo = self.accountService.readAccount()
+        accountInfo = self.readIniFileService.readAccount()
         if accountInfo:
             for row, rowList in enumerate(accountInfo):
                 row_position = self.tableWidget.rowCount()

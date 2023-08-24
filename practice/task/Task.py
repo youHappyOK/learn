@@ -4,10 +4,13 @@ import time
 from PyQt5 import QtWidgets, Qt
 from PyQt5.QtCore import Qt
 from xiaopyDesktop import *
+
+from practice.common.LogUtil import LogUtil
 from practice.resource.desc import *
 from practice.gameProcess.gameProcess import *
 from practice.common.Container import *
 from practice.slot.TableWidgetRereshSig import TableWidgetRereshSig
+from practice.slot.TextEditRereshSig import TextEditRereshSig
 
 
 class Task:
@@ -30,6 +33,7 @@ class Task:
             # 为True时立即返回, 为False时阻塞直到内部的标识位为True后返回
             threadDict['pauseFlag'].wait()
             print('线程: %s 运行中...' % threading.currentThread().ident)
+            LogUtil.setTextEditLog('线程: %s 运行中...' % threading.currentThread().ident)
             if threadDict['process'] == '枚举窗口':
                 # todo，先支持一个雷电窗口的场景
                 hwnd = tdDm.EnumWindow(0, 'TheRender', 'RenderWindow', 1 + 2)
@@ -40,17 +44,20 @@ class Task:
                 # 设置字典文件
                 tdPy.set_dict(0, 'font.txt')
                 print('枚举窗口 hwnd: %s 成功' % hwnd)
+                LogUtil.setTextEditLog('枚举窗口 hwnd: %s 成功' % hwnd)
                 threadDict['process'] = '绑定窗口'
                 self.setTableWidgetProcessItem('绑定窗口')
             elif threadDict['process'] == '绑定窗口':
                 tdDm.BindWindow(threadDict['hwnd'], 'gdi', 'windows', 'windows', 0)
                 print('绑定窗口 hwnd: %s 成功' % threadDict['hwnd'])
+                LogUtil.setTextEditLog('绑定窗口 hwnd: %s 成功' % threadDict['hwnd'])
                 threadDict['process'] = '打开游戏'
                 self.setTableWidgetProcessItem('打开游戏')
             elif threadDict['process'] == '打开游戏':
                 tdPy.run_action(Action().click(Point(1097, 268)))
                 threadDict['process'] = '账号登录'
                 print('打开游戏成功')
+                LogUtil.setTextEditLog('打开游戏成功')
                 self.setTableWidgetProcessItem('账号登录')
             elif threadDict['process'] == '账号登录':
                 task = [
@@ -64,6 +71,7 @@ class Task:
                 # 设置状态机，先后顺序必须状态机
                 tdPy.cs(1).run(task)
                 print('账号登录成功')
+                LogUtil.setTextEditLog('账号登录成功')
                 threadDict['process'] = '选择区服'
                 self.setTableWidgetProcessItem('选择区服')
             elif threadDict['process'] == '选择区服':
@@ -72,6 +80,7 @@ class Task:
                 ]
                 tdPy.run(task)
                 print('选择区服成功')
+                LogUtil.setTextEditLog('选择区服成功')
                 threadDict['process'] = '角色选择'
                 self.setTableWidgetProcessItem('角色选择')
             elif threadDict['process'] == '角色选择':
@@ -81,18 +90,22 @@ class Task:
                 ]
                 tdPy.run(task)
                 print('角色选择完成')
+                LogUtil.setTextEditLog('角色选择完成')
                 threadDict['process'] = '进入游戏'
                 self.setTableWidgetProcessItem('进入游戏')
             elif threadDict['process'] == '进入游戏':
                 print('进入游戏')
+                LogUtil.setTextEditLog('进入游戏')
                 threadDict['process'] = '游戏操作'
                 self.setTableWidgetProcessItem('游戏操作')
             elif threadDict['process'] == '游戏操作':
                 print('游戏操作')
+                LogUtil.setTextEditLog('游戏操作')
                 gameProcess.gameOpration()
                 threadDict['process'] = '任务完成'
             elif threadDict['process'] == '任务完成':
                 print('任务完成')
+                LogUtil.setTextEditLog('任务完成')
                 threadDict['process'] = '任务完成'
             time.sleep(2)
 
@@ -106,4 +119,6 @@ class Task:
         tableWidgetRereshSig.tableWidgetRereshSig.connect(bootStrap.tableWidgetHandleSignal)
         # 发射信号
         tableWidgetRereshSig.tableWidgetRereshSig.emit(process)
+
+
 
