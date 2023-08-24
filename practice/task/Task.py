@@ -7,7 +7,7 @@ from xiaopyDesktop import *
 from practice.resource.desc import *
 from practice.gameProcess.gameProcess import *
 from practice.common.Container import *
-from practice.slot.ControllerViewSlot import ControllerViewSlot
+from practice.slot.TableWidgetRereshSig import TableWidgetRereshSig
 
 
 class Task:
@@ -41,14 +41,17 @@ class Task:
                 tdPy.set_dict(0, 'font.txt')
                 print('枚举窗口 hwnd: %s 成功' % hwnd)
                 threadDict['process'] = '绑定窗口'
+                self.setTableWidgetProcessItem('绑定窗口')
             elif threadDict['process'] == '绑定窗口':
                 tdDm.BindWindow(threadDict['hwnd'], 'gdi', 'windows', 'windows', 0)
                 print('绑定窗口 hwnd: %s 成功' % threadDict['hwnd'])
                 threadDict['process'] = '打开游戏'
+                self.setTableWidgetProcessItem('打开游戏')
             elif threadDict['process'] == '打开游戏':
                 tdPy.run_action(Action().click(Point(1097, 268)))
                 threadDict['process'] = '账号登录'
                 print('打开游戏成功')
+                self.setTableWidgetProcessItem('账号登录')
             elif threadDict['process'] == '账号登录':
                 task = [
                     Action(desc['wechat']).sleep(1).click(Point(1054, 417)).sleep(1).input('#c#CodeGlory').sleep(1)
@@ -62,6 +65,7 @@ class Task:
                 tdPy.cs(1).run(task)
                 print('账号登录成功')
                 threadDict['process'] = '选择区服'
+                self.setTableWidgetProcessItem('选择区服')
             elif threadDict['process'] == '选择区服':
                 task = [
                     Action(desc['enterGame']).func(lambda: print("找到进入游戏")).sleep(3).click(Point(1142, 693)).after('退出')
@@ -69,6 +73,7 @@ class Task:
                 tdPy.run(task)
                 print('选择区服成功')
                 threadDict['process'] = '角色选择'
+                self.setTableWidgetProcessItem('角色选择')
             elif threadDict['process'] == '角色选择':
                 task = [
                     Action(desc['角色选择大']).func(lambda: print("找到吉姆哥大")).click(Point(630, 387)).sleep(2),
@@ -77,9 +82,11 @@ class Task:
                 tdPy.run(task)
                 print('角色选择完成')
                 threadDict['process'] = '进入游戏'
+                self.setTableWidgetProcessItem('进入游戏')
             elif threadDict['process'] == '进入游戏':
                 print('进入游戏')
                 threadDict['process'] = '游戏操作'
+                self.setTableWidgetProcessItem('游戏操作')
             elif threadDict['process'] == '游戏操作':
                 print('游戏操作')
                 gameProcess.gameOpration()
@@ -90,7 +97,13 @@ class Task:
             time.sleep(2)
 
     def setTableWidgetProcessItem(self, process: str):
-        slot = BeanDefinitionMap.get("ControllerViewSlot")
-        tableWidgetItem = QtWidgets.QTableWidgetItem(str(process))
-        tableWidgetItem.setTextAlignment(Qt.AlignCenter)
-        slot.tableWidget.setItem(0, 2, tableWidgetItem)
+        print('更新tableWidget' + process)
+        bootStrap = BeanDefinitionMap.get("ApplicationBootstrp")
+        # 这里必须通过pytqt事件才能刷新前台页面
+        # 创建信号
+        tableWidgetRereshSig = TableWidgetRereshSig()
+        # 连接槽函数
+        tableWidgetRereshSig.tableWidgetRereshSig.connect(bootStrap.tableWidgetHandleSignal)
+        # 发射信号
+        tableWidgetRereshSig.tableWidgetRereshSig.emit(process)
+

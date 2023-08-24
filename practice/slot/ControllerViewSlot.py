@@ -10,8 +10,7 @@ from practice.thread.ThreadProcess import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMessageBox
-from practice.common.Container import *
-
+from practice.slot.TableWidgetRereshSig import TableWidgetRereshSig
 
 
 class ControllerViewSlot(Ui_MainWindow):
@@ -23,8 +22,13 @@ class ControllerViewSlot(Ui_MainWindow):
         self.accountService = AccountService(self.iniRepo)
         self.threadProcess = ThreadProcess()
 
-        # 将ControllerViewSlot放到container中
-        BeanDefinitionMap.set("ControllerViewSlot", self)
+    def tableWidgetHandleSignal(self, message):
+        print(f"tableWidgetHandle signal: {message}")
+        bootStrap = BeanDefinitionMap.get("ApplicationBootstrp")
+        tableWidgetItem = QtWidgets.QTableWidgetItem(message)
+        tableWidgetItem.setTextAlignment(Qt.AlignCenter)
+        bootStrap.tableWidget.setItem(0, 2, tableWidgetItem)
+
 
     def getMainTask(self):
         self.settingService.mainTask = ''
@@ -225,6 +229,7 @@ class ControllerViewSlot(Ui_MainWindow):
         print('停止某个线程')
         self.threadProcess.stopProcessThread(0)
 
+
     def closeEvent(self, event):
         reply = QMessageBox.question(self, 'Message',
                                      "Are you sure to quit?", QMessageBox.Yes |
@@ -234,6 +239,8 @@ class ControllerViewSlot(Ui_MainWindow):
             event.accept()
         else:
             event.ignore()
+
+
 
 
 

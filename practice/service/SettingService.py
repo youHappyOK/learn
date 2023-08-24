@@ -5,6 +5,7 @@ class SettingService:
 
     def __init__(self, iniRepo: IniFileRepository):
         self.configParser = iniRepo.configParser
+        self.configPath = iniRepo.configPath
         '''
         基本设置读取
         '''
@@ -28,6 +29,8 @@ class SettingService:
         self.dailyTask = ''
         # 循环任务
         self.weeklyTask = '循环1-17'
+
+
 
     def saveSettingToFile(self):
         try:
