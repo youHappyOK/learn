@@ -46,4 +46,10 @@ time.sleep(5)
 
 print('结束线程.....')
 # 关闭线程句柄
+# 理解错了，以为kernel32.CloseHandle是关闭线程，其实是关闭线程的句柄，其实线程还存在。。
+# 它主要用于释放资源而不是直接结束线程。关闭线程的句柄并不会立即结束线程的执行。线程会继续运行，直到它完成或被终止。
 kernel32.CloseHandle(thread_handle)
+
+time.sleep(5)
+
+print('main函数结束')
