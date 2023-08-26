@@ -3,7 +3,7 @@
 
 """
 File: View.py
-Author: luoji
+Author: 吉姆哥
 Date: 2023/8/26
 Description: 视图层
 """

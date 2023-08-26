@@ -8,9 +8,12 @@ class ViewController:
         self.view = Container.get('View')
         self.view.show()
         Container.set('ViewController', self)
+        self.eventInit()
 
     # ≥ı ºªØ–≈∫≈
     def eventInit(self):
         self.view.pushButton_5.clicked.connect(SlotFunc.saveSetting)
+        self.view.pushButton_6.clicked.connect(SlotFunc.loadSetting)
+        self.view.pushButton_7.clicked.connect(SlotFunc.loadAccount)
 
 

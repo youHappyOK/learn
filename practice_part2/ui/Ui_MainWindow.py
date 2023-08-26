@@ -19,6 +19,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(614, 421)
+        # 二次修改，还是固定大小比较好
+        MainWindow.setMinimumSize(QtCore.QSize(614, 421))
+        MainWindow.setMaximumSize(QtCore.QSize(614, 421))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.pushButton_7 = QtWidgets.QPushButton(self.centralwidget)

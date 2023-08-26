@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import QApplication
 
 from practice_part2.controller.ViewController import ViewController
 from practice_part2.view.View import *
+from practice_part2.repo.FileRepo import FileRepo
+
 
 # ALT + C	要求给出建议（当有暗色字出现时，按tab接受建议）
 # 快捷键	功能
@@ -15,11 +17,15 @@ from practice_part2.view.View import *
 
 # 程序入口
 class ApplicationBootstrap:
-    pass
+
+    def __init__(self):
+        # 放到 ioc 容器中
+        FileRepo()
+        View()
+        ViewController()
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    View()
-    ViewController()
+    ApplicationBootstrap()
     sys.exit(app.exec_())
