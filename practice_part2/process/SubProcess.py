@@ -95,4 +95,5 @@ class SubProcess:
             elif threadDict['process'] == '任务完成':
                 print('任务完成')
                 threadDict['process'] = '任务完成'
+                break
             time.sleep(2)
