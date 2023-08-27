@@ -29,13 +29,13 @@ class SlotFunc:
         # 截取','
         if taskList.endswith(','):
             taskList = taskList[:-1]
-        Container.get('IniFileRepo').saveSettingToFile(view.lineEdit.text(), view.lineEdit_2.text(),
+        Container.get('FileRepo').saveSettingToFile(view.lineEdit.text(), view.lineEdit_2.text(),
                                                        view.lineEdit_3.text(), taskList)
 
     # 加载配置
     @staticmethod
     def loadSetting(self):
-        iniFileRepo = Container.get('IniFileRepo')
+        iniFileRepo = Container.get('FileRepo')
         view = Container.get('View')
         settingDict = iniFileRepo.readSetting()
         if settingDict:
@@ -57,7 +57,7 @@ class SlotFunc:
     def loadAccount(self):
         print('加载账号信息')
         view = Container.get('View')
-        iniFileRepo = Container.get('IniFileRepo')
+        iniFileRepo = Container.get('FileRepo')
         # 先清空，再加载
         view.tableWidget.setRowCount(0)
         accountInfo = iniFileRepo.readAccount()
@@ -74,5 +74,31 @@ class SlotFunc:
                         view.tableWidget.setItem(row, 2, tableWidgetItem)
                     if col == 2:
                         view.tableWidget.setItem(row, 3, tableWidgetItem)
+
+
+    # 开始
+    @staticmethod
+    def start(self):
+        print('开启游戏')
+        mainProcess = Container.get('MainProcess')
+        mainProcess.runMainProcess()
+
+    # 暂停
+    @staticmethod
+    def pause(self):
+        print('暂停所有窗口游戏')
+        Container.get('ThreadGroup').pauseAll()
+
+    # 恢复
+    @staticmethod
+    def resume(self):
+        print('恢复所有窗口游戏')
+        Container.get('ThreadGroup').resumeAll()
+
+    # 停止
+    @staticmethod
+    def stop(self):
+        print('结束所有窗口游戏')
+        Container.get('ThreadGroup').stopAll()
 
 

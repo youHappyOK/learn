@@ -3,9 +3,12 @@ import sys
 
 from PyQt5.QtWidgets import QApplication
 
+from practice_part2.common.ThreadGroup import ThreadGroup
 from practice_part2.controller.ViewController import ViewController
 from practice_part2.view.View import *
 from practice_part2.repo.FileRepo import FileRepo
+from practice_part2.process.MainProcess import MainProcess
+from practice_part2.process.GameOpration import GameOpration
 
 
 # ALT + C	要求给出建议（当有暗色字出现时，按tab接受建议）
@@ -23,6 +26,9 @@ class ApplicationBootstrap:
         FileRepo()
         View()
         ViewController()
+        ThreadGroup()
+        MainProcess()
+        GameOpration()
 
 
 if __name__ == '__main__':

@@ -26,7 +26,7 @@ class FileRepo:
         except Exception as e:
             print("Error reading config:", str(e))
 
-        Container.set('IniFileRepo', self)
+        Container.set('FileRepo', self)
 
     # 保存设置文件
     def saveSettingToFile(self, progressPath='', ldConsolePath='', accountPath='', taskList=''):
