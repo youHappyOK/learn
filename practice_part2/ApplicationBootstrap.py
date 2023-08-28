@@ -3,6 +3,7 @@ import sys
 
 from PyQt5.QtWidgets import QApplication
 
+from practice_part2.common.LdTool import LdTool
 from practice_part2.common.ThreadGroup import ThreadGroup
 from practice_part2.controller.ViewController import ViewController
 from practice_part2.view.View import *
@@ -29,6 +30,7 @@ class ApplicationBootstrap:
         ThreadGroup()
         MainProcess()
         GameOpration()
+        LdTool(Container.get('FileRepo').readSetting()['ldPath'])
 
 
 if __name__ == '__main__':

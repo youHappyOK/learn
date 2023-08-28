@@ -19,6 +19,9 @@ class ThreadGroup:
         self.delaySecond = delaySecond
         Container.set('ThreadGroup', self)
 
+    def getThread(self, index):
+        return self.threadGroup[index]
+
     # 加入线程
     def addThread(self, thread):
         self.threadGroup.append(thread)

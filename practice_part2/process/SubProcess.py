@@ -9,7 +9,6 @@ Description: 每个线程的运行流程
 """
 import threading
 import time
-
 from PyGameAuto32 import PyGameAuto
 
 from practice_part2.common.DmTool import DmTool
@@ -23,25 +22,39 @@ class SubProcess:
         # 初始化线程pygame对象
         tdPy = PyGameAuto()
         # 初始化线程大漠对象
-        tdDm = tdPy.td_init(threadIndex)
+        tdDm = None
+        try:
+            tdDm = tdPy.td_init(threadIndex)
+        except Exception as e:
+            print('线程大漠对象初始化失败, %s' % e)
         # 设置大漠对象
         tdPy.set_win(tdDm)
         # 设置日志级别
         tdPy.set_level(0)
-        threadDict = Container.get('ThreadGroup').get(threadIndex)
+        threadDict = Container.get('ThreadGroup').getThread(threadIndex)
         # 方便外面解绑
-        threadDict['tdDm'] = tdDm
+        # threadDict['tdDm'] = tdDm
         threadDict['threadIdent'] = threading.currentThread().ident
         threadDict['process'] = '模拟器开启'
         gameOpration = Container.get('GameOpration')
         # 放置未绑定的句柄
         unbindHwnds = []
+        ldTool = Container.get('LdTool')
         while True:
             print('线程: %s 运行中...' % threading.currentThread().ident)
             if threadDict['process'] == '模拟器开启':
-                pass
+                # 启动雷电模拟器序号（多开程序里面的序号）
+                ldTool.launch(threadIndex)
+                # 修改分辨率
+                ldTool.modifyResolution(threadIndex, 1024, 576, 320)
+                # 排列雷电模拟器窗口
+                ldTool.sortWnd()
+                print('模拟器启动成功, index: %s' % threadIndex)
+                threadDict['process'] = '模拟器状态判断'
             if threadDict['process'] == '模拟器状态判断':
-                pass
+                runningStatus = ldTool.isrunning(threadIndex)
+                print('index: %s, 运行状态 %s' % (threadIndex, runningStatus))
+                break
             if threadDict['process'] == '枚举窗口':
                 hwnds = tdDm.EnumWindow(0, 'TheRender', 'RenderWindow', 1 + 2)
                 # 将未绑定的句柄放到unbindHwnds中
