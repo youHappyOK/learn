@@ -14,7 +14,6 @@ from PyGameAuto32 import PyGameAuto
 from practice_part2.common.DmTool import DmTool
 from practice_part2.common.Container import Container
 
-
 class SubProcess:
 
     @staticmethod
@@ -22,18 +21,14 @@ class SubProcess:
         # 初始化线程pygame对象
         tdPy = PyGameAuto()
         # 初始化线程大漠对象
-        tdDm = None
-        try:
-            tdDm = tdPy.td_init(threadIndex)
-        except Exception as e:
-            print('线程大漠对象初始化失败, %s' % e)
+        tdDm = tdPy.td_init(threadIndex)
         # 设置大漠对象
         tdPy.set_win(tdDm)
         # 设置日志级别
         tdPy.set_level(0)
         threadDict = Container.get('ThreadGroup').getThread(threadIndex)
         # 方便外面解绑
-        # threadDict['tdDm'] = tdDm
+        threadDict['tdDm'] = tdDm
         threadDict['threadIdent'] = threading.currentThread().ident
         threadDict['process'] = '模拟器开启'
         gameOpration = Container.get('GameOpration')

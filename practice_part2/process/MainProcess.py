@@ -40,6 +40,7 @@ class MainProcess:
         print('启动 %s 个线程...' % threadNum)
         for i in range(threadNum):
             threadObj = CustomThread(SubProcess.runProcess, args=(i,), name='runSubProcess')
+            # threadObj = threading.Thread(target=SubProcess.runProcess, args=(i,), name='runSubProcess')
             threadDict = {'threadObj': threadObj, 'accountInfo': accountInfoList[i]}
             # 加入线程组
             self.threadGroup.addThread(threadDict)
