@@ -36,7 +36,7 @@ class MainProcess:
         # 多开数量就是账号数量
         threadNum = len(accountInfoList)
         # 启动延迟(默认10秒)
-        self.threadGroup.delaySecond = 10
+        self.threadGroup.delaySecond = 7
         print('启动 %s 个线程...' % threadNum)
         for i in range(threadNum):
             threadObj = CustomThread(SubProcess.runProcess, args=(i,), name='runSubProcess')
