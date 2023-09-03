@@ -22,7 +22,7 @@ class SubProcess:
         # 初始化线程pygame对象
         tdPy = PyGameAuto()
         # 坑，不加这一句会报错：
-        # 创建大漠对象失败, 请检查管理员权限/杀软/dm.dll是否存在 (-2147221008, '尚未调用 CoInitialize。', None, None)
+        # 创建大漠对象失败, 请检查管理员权限/杀软/dm.dll是否存在 (-2147221008, '尚未调用 CoInitialize。', None, None)。
         pythoncom.CoInitialize()
         # 初始化线程大漠对象
         tdDm = tdPy.td_init(threadIndex)
